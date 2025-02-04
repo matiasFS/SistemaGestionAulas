@@ -5,6 +5,9 @@ import java.time.LocalDate;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.sistema.GestionAulas.Aulas.Entity.Espacio;
+import com.sistema.GestionAulas.Universidad.Entity.Materia;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
