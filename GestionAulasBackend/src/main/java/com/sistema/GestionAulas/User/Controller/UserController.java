@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.sistema.GestionAulas.Jwt.*;
+import com.sistema.GestionAulas.Jwt.JwtService;
 import com.sistema.GestionAulas.User.Entity.User;
-import com.sistema.GestionAulas.User.service.*;
+import com.sistema.GestionAulas.User.service.UserService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -35,7 +35,7 @@ public class UserController {
 
     private final JwtService jwtService;
 
-    @PreAuthorize("hasAnyAuthority('USER', 'ADMIN') ")
+    @PreAuthorize("hasAnyAuthority('AUDITOR', 'ADMIN') ")
     @GetMapping("/users")
     public ResponseEntity<List<User>> getUsers() {
         return ResponseEntity.ok(userService.findAll());
@@ -54,7 +54,7 @@ public class UserController {
         return ResponseEntity.ok(userService.findById(id));
     }
 
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN', 'AUDITOR', 'PROFESSOR')")
     @PutMapping("/users/{id}")
     public ResponseEntity<User> updateUser(@PathVariable int id, @RequestBody User user) {
         return ResponseEntity.ok(userService.update(id, user));
@@ -73,6 +73,13 @@ public class UserController {
     public ResponseEntity<Void> deleteUser(@PathVariable int id) {
         userService.delete(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @PostMapping("/users/{id}")
+    public ResponseEntity<User> updateUserRole(@PathVariable int id, @RequestBody UpdateRoleRequest role) {
+        System.out.println(role.getRole());
+        return ResponseEntity.ok(userService.updateUserRole(id, role.getRole()));
     }
 
 }

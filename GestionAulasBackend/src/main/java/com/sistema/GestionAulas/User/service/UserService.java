@@ -77,10 +77,16 @@ public class UserService implements IUserService {
         User userToUpdate = findByUsername(username);
         if (passwordEncoder.matches(oldPassword, userToUpdate.getPassword())) {
             userToUpdate.setPassword(passwordEncoder.encode(newPassword));
+            return userRepository.save(userToUpdate);
         } else {
             throw new RuntimeException("Old password is incorrect");
         }
-        return userToUpdate;
     }
 
+    @Override
+    public User updateUserRole(int id, Role role){
+        User userToUpdateRole = findById(id);
+        userToUpdateRole.setRole(role);
+        return userRepository.save(userToUpdateRole);
+    }
 }
