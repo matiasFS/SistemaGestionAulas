@@ -13,6 +13,4 @@ public interface FinalRepository extends CrudRepository<Final, Long> {
     @SuppressWarnings("null")
     @Override
     List<Final> findAll();
-
-    Final findByID(long id);
 }

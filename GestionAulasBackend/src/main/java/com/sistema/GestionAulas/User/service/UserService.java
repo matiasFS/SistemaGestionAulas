@@ -41,9 +41,6 @@ public class UserService implements IUserService {
         User userToUpdate = findById(id);
         userToUpdate.setUsername(user.getUsername());
         userToUpdate.setEmail(user.getEmail());
-        userToUpdate.setFirstName(user.getFirstName());
-        userToUpdate.setLastName(user.getLastName());
-        userToUpdate.setCountry(user.getCountry());
         userToUpdate.setRole(user.getRole());
         return userRepository.save(userToUpdate);
     }

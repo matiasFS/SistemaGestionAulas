@@ -5,6 +5,7 @@ import java.time.LocalDate;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import io.micrometer.common.lang.NonNull;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -13,19 +14,17 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Table(name = "espacio")
 @Getter
 @Setter
 @RequiredArgsConstructor
-@NoArgsConstructor
+@ToString
 public class Espacio implements Serializable {
 
 	/**
@@ -37,22 +36,27 @@ public class Espacio implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
-	@NotEmpty
+	@NonNull
 	@Column(name = "fecha", nullable = false)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate fecha;
 
-	@NotEmpty
+	@NonNull
 	@Column(name = "turno", nullable = false)
 	private char turno;
 
-	@NotEmpty
+	@NonNull
 	@Column(name = "libre", nullable = false)
 	private boolean libre;
 
 	@ManyToOne
-	@NonNull
 	@JoinColumn(name = "aula_id")
 	private Aula aula;
 
+	public Espacio(LocalDate fechaN, char turno, boolean libre, Aula aula){
+		this.fecha = fechaN;
+		this.turno = turno;
+		this.libre = libre;
+		this.aula = aula;
+	}
 }

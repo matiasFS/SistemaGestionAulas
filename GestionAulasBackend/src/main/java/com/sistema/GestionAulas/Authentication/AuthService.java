@@ -7,7 +7,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.sistema.GestionAulas.Jwt.JwtService;
-import com.sistema.GestionAulas.User.Entity.Role;
+import com.sistema.GestionAulas.Universidad.Repository.PersonaRepository;
 import com.sistema.GestionAulas.User.Entity.User;
 import com.sistema.GestionAulas.User.Repository.UserRepository;
 
@@ -21,6 +21,7 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
+    private final PersonaRepository personaRepository;
 
     public AuthResponse login(LoginRequest loginRequest) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
@@ -33,19 +34,12 @@ public class AuthService {
     }
 
     public AuthResponse register(RegisterRequest registerRequest) {
-        User user = User.builder()
-                .username(registerRequest.getUsername())
-                .password(passwordEncoder.encode(registerRequest.getPassword()))
-                .email(registerRequest.getEmail())
-                .firstName(registerRequest.getFirstName())
-                .lastName(registerRequest.getLastName())
-                .country(registerRequest.getCountry())
-                .role(Role.USER)
-                .build();
-
+        User user = new User(registerRequest.getNombre(), registerRequest.getApellido(), registerRequest.getTipoDocumento(), registerRequest.getDni(), registerRequest.getUsername(), passwordEncoder.encode(registerRequest.getPassword()),registerRequest.getEmail(),registerRequest.getRole());
+        System.out.println(user.getApellido());
         userRepository.save(user);
+        
 
-        return AuthResponse.builder().token(jwtService.getToken(user)).role(Role.USER.toString()).build();
+        return AuthResponse.builder().token(jwtService.getToken(user)).role(user.getRole().toString()).build();
 
     }
 

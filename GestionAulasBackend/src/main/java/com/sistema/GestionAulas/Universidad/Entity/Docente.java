@@ -1,7 +1,5 @@
 package com.sistema.GestionAulas.Universidad.Entity;
 
-import com.sistema.GestionAulas.User.Entity.User;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -15,7 +13,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @RequiredArgsConstructor
-public class Docente extends User {
+public class Docente extends Persona{
 
 	@NotEmpty
 	@Column(name = "nroLegajo")

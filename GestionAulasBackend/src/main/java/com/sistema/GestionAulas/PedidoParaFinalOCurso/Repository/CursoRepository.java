@@ -14,5 +14,4 @@ public interface CursoRepository extends CrudRepository<Curso, Long> {
     @Override
     List<Curso> findAll();
 
-    Curso findByID(long id);
 }

@@ -70,12 +70,26 @@ public class NotaPedidoService implements INotaPedidoService {
     }
     @Override
     public Final findFinalByID(long id) {
-        return finalRepository.findByID(id);
+        List<Final> final1 = finalRepository.findAll();
+        Final final2 = null;
+        for (Final final3 : final1) {
+            if (final3.getId() == id) {
+                final2 = final3;
+            }
+        }
+        return final2;
     }
 
     @Override
     public Curso findCursoByID(long id) {
-        return cursoRepository.findByID(id);
+        List<Curso> curso = cursoRepository.findAll();
+        Curso curso1 = new Curso();
+        for (Curso curso2 : curso) {
+            if (curso2.getId() == id) {
+                curso1 = curso2;
+            }
+        }
+        return curso1;
     }
 
 }
