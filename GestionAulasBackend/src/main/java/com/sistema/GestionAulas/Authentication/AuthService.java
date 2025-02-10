@@ -7,7 +7,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.sistema.GestionAulas.Jwt.JwtService;
-import com.sistema.GestionAulas.Universidad.Repository.PersonaRepository;
 import com.sistema.GestionAulas.User.Entity.User;
 import com.sistema.GestionAulas.User.Repository.UserRepository;
 
@@ -21,7 +20,6 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
-    private final PersonaRepository personaRepository;
 
     public AuthResponse login(LoginRequest loginRequest) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));

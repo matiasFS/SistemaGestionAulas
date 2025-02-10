@@ -20,6 +20,7 @@ import com.sistema.GestionAulas.Jwt.JwtService;
 import com.sistema.GestionAulas.User.Entity.User;
 import com.sistema.GestionAulas.User.service.UserService;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -35,37 +36,39 @@ public class UserController {
 
     private final JwtService jwtService;
 
-    @PreAuthorize("hasAnyAuthority('AUDITOR', 'ADMIN') ")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'ASSISTANT') ")
     @GetMapping("/users")
     public ResponseEntity<List<User>> getUsers() {
         return ResponseEntity.ok(userService.findAll());
     }
 
     @CrossOrigin
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'ASSISTANT')")
     @PostMapping("/users")
-    public User addUser(@RequestBody User user) {
+    public User addUser(@Valid @RequestBody User user) {
         return userService.save(user);
     }
 
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN', 'ASSISTANT')")
     @GetMapping("/users/{id}")
     public ResponseEntity<User> getUserById(@PathVariable int id) {
         return ResponseEntity.ok(userService.findById(id));
     }
 
-    @PreAuthorize("hasAuthority('ADMIN', 'AUDITOR', 'PROFESSOR')")
-    @PutMapping("/users/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable int id, @RequestBody User user) {
-        return ResponseEntity.ok(userService.update(id, user));
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'PROFESSOR', 'ASSISTANT', 'USER')")
+    @PutMapping("/users/updateUser")
+    public ResponseEntity<User> updateUser(@RequestHeader("Authorization") String token, @Valid @RequestBody UpdateUserRequest userUpdateRequest) {
+        String username = jwtService.getUsernameFromToken(token.substring(7));
+        User userToUpdate = userService.updateUser(username, userUpdateRequest);
+        return ResponseEntity.ok(userToUpdate);
     }
 
-    @PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
-    @PutMapping("users/changePassword")
-    public ResponseEntity<User> changePassword(@RequestHeader("Authorization") String token, @RequestBody PasswordChangeRequest passwordChangeRequest) {
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'PROFESSOR', 'ASSISTANT', 'USER')")
+    @PutMapping("/users/changePassword")
+    public ResponseEntity<User> changePassword(@RequestHeader("Authorization") String token, @Valid @RequestBody PasswordChangeRequest passwordChangeRequest) {
         String username = jwtService.getUsernameFromToken(token.substring(7));
-        User userToUpdate = userService.changePassword(username, passwordChangeRequest.getOldPassword(), passwordChangeRequest.getNewPassword());
-        return ResponseEntity.ok(userService.update(userToUpdate.getId(), userToUpdate));
+        User userToUpdate = userService.changePassword(username, passwordChangeRequest);
+        return ResponseEntity.ok(userToUpdate);
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
@@ -78,7 +81,6 @@ public class UserController {
     @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("/users/{id}")
     public ResponseEntity<User> updateUserRole(@PathVariable int id, @RequestBody UpdateRoleRequest role) {
-        System.out.println(role.getRole());
         return ResponseEntity.ok(userService.updateUserRole(id, role.getRole()));
     }
 

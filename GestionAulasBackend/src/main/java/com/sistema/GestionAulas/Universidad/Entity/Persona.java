@@ -8,6 +8,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -25,18 +26,21 @@ public class Persona {
     private Integer id;
 
     @Column(name = "nombre", length = 45)
+    @NotBlank
     private String nombre;
 
     @Column(name = "apellido", length = 45)
+    @NotBlank
     private String apellido;
 
     @Column(name = "tipoDocumento", unique = false, length = 45)
+    @NotBlank
     private String tipoDocumento;
 
     @Column(name = "dni", unique = true, length = 8)
     private long dni;
 
-    public Persona(String nombre, String apellido, String tipoDocumento, long dni){
+    public Persona(String nombre, String apellido, String tipoDocumento, long dni) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.tipoDocumento = tipoDocumento;

@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.sistema.GestionAulas.User.Controller.PasswordChangeRequest;
+import com.sistema.GestionAulas.User.Controller.UpdateUserRequest;
 import com.sistema.GestionAulas.User.Entity.Role;
 import com.sistema.GestionAulas.User.Entity.User;
 import com.sistema.GestionAulas.User.Repository.UserRepository;
@@ -37,18 +39,18 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public User update(int id, User user) {
-        User userToUpdate = findById(id);
-        userToUpdate.setUsername(user.getUsername());
-        userToUpdate.setEmail(user.getEmail());
-        userToUpdate.setRole(user.getRole());
+    public User updateUser(String username, UpdateUserRequest userUpdateRequest){
+        User userToUpdate = findByUsername(username);
+        userToUpdate.setApellido(userUpdateRequest.getApellido());
+        userToUpdate.setNombre(userUpdateRequest.getNombre());
+        userToUpdate.setEmail(userUpdateRequest.getEmail());
         return userRepository.save(userToUpdate);
+        
     }
 
     @Override
     public User save(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRole(Role.USER);
         return userRepository.save(user);
     }
 
@@ -70,8 +72,12 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public User changePassword(String username, String oldPassword, String newPassword) {
+    public User changePassword(String username, PasswordChangeRequest passwordChangeRequest) {
+        
         User userToUpdate = findByUsername(username);
+        String oldPassword = passwordChangeRequest.getOldPassword();
+        String newPassword = passwordChangeRequest.getNewPassword();
+
         if (passwordEncoder.matches(oldPassword, userToUpdate.getPassword())) {
             userToUpdate.setPassword(passwordEncoder.encode(newPassword));
             return userRepository.save(userToUpdate);
