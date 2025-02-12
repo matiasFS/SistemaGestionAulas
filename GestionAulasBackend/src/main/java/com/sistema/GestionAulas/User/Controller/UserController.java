@@ -49,7 +49,7 @@ public class UserController {
         return userService.save(user);
     }
 
-    @PreAuthorize("hasAuthority('ADMIN', 'ASSISTANT')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'ASSISTANT')")
     @GetMapping("/users/{id}")
     public ResponseEntity<User> getUserById(@PathVariable int id) {
         return ResponseEntity.ok(userService.findById(id));
@@ -75,7 +75,7 @@ public class UserController {
     @DeleteMapping("/users/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable int id) {
         userService.delete(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok().build();
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
