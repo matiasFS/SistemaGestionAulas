@@ -20,7 +20,9 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
@@ -28,6 +30,8 @@ import lombok.Setter;
 @Inheritance(strategy = InheritanceType.JOINED)
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class NotaPedido implements Serializable {
 
 	/**

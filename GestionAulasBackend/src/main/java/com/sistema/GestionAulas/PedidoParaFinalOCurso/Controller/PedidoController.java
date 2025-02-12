@@ -1,9 +1,14 @@
 package com.sistema.GestionAulas.PedidoParaFinalOCurso.Controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +20,7 @@ import com.sistema.GestionAulas.PedidoParaFinalOCurso.Service.NotaPedidoService;
 import com.sistema.GestionAulas.Universidad.Service.MateriaService;
 
 import lombok.RequiredArgsConstructor;
+
 
 @RestController
 @CrossOrigin(origins = "http://localhost:5173")
@@ -40,104 +46,30 @@ public class PedidoController {
     public ResponseEntity<Curso> createPedidoCurso(@RequestBody PedidoCursoRequest pedidoCursoRequest) {
         return ResponseEntity.ok(pedidoService.saveCurso(pedidoCursoRequest));
     }
-/*
-    @Secured("ROLE_ASISTENTE")
-    @PostMapping("/pedidoenviadocurso")
-    public ModelAndView pedidoCursoEnviado(@Valid @ModelAttribute Curso cursoPedido, RedirectAttributes attributes) {
-        ModelAndView mAV = new ModelAndView(ViewRouteHelper.REDIRECT_HOME);
-        pedidoService.insertOrUpdateCurso(cursoPedido);
 
-        attributes.addFlashAttribute("success", "Pedido enviado con exito");
-
-        return mAV;
-    }
-
-    @Secured({ "ROLE_ADMIN_GENERAL", "ROLE_ASISTENTE" })
-    @GetMapping("/listaPedidos")
-    public ModelAndView listarPedidos() {
-
-        ModelAndView mAV = new ModelAndView(ViewRouteHelper.PEDIDOSLISTAR);
-
-        List<Final> final1 = pedidoService.getAll();
-        List<Curso> curso = pedidoService.getAll1();
-        List<Final> final3 = new ArrayList<>();
-        List<Curso> curso3 = new ArrayList<>();
-        for (Final final2 : final1) {
-            if (final2.getEspacio() == null) {
-                final2.setEspacio(new Espacio());
-                final2.getEspacio().setAula(new Aula());
-                final2.getEspacio().getAula().setEdificio(new Edificio());
-                final3.add(final2);
-            } else {
-                final3.add(final2);
-            }
-        }
-        for (Curso curso2 : curso) {
-            if (curso2.getEspacio() == null) {
-                curso2.setEspacio(new Espacio());
-                curso2.getEspacio().setAula(new Aula());
-                curso2.getEspacio().getAula().setEdificio(new Edificio());
-                curso3.add(curso2);
-            } else {
-                curso3.add(curso2);
-            }
-        }
-
-        mAV.addObject("final1", final1);
-        mAV.addObject("curso", curso);
-
-        return mAV;
+    @GetMapping("/listPedidosFinal")
+    public ResponseEntity<List<Final>> listPedidosFinal() {
+        return ResponseEntity.ok(pedidoService.getAllFinals());
 
     }
 
-    @Secured({"ROLE_ADMIN_GENERAL","ROLE_ASISTENTE"})
-    @GetMapping("/deleteFinal/{id}")
-    public String eliminarFinal(@PathVariable("id") Long idPedido, RedirectAttributes attribute) {
+    @GetMapping("/listPedidosCurso")
+    public ResponseEntity<List<Curso>> listPedidoCurso(){
+        return ResponseEntity.ok(pedidoService.getAllCursos());
+    }
+    
+    @DeleteMapping("/curso/{id}")
+    public ResponseEntity<Void> deletePedidoCurso(@PathVariable long id){
+        pedidoService.deleteCurso(id);
+        return ResponseEntity.ok().build();
 
-        Final final1 = null;
-        if (idPedido > 0) {
-            final1 = pedidoService.buscarPorID(idPedido);
-            if (final1 == null) {
-                attribute.addFlashAttribute("error", "*ERROR* el pedido solicitado no existe");
-                return ViewRouteHelper.REDIRECT_PEDIDO;
-            }else{
-                pedidoService.eliminarFinal(idPedido);
-
-            }
-        }else{
-            attribute.addFlashAttribute("error", "*ERROR* el pedido solicitado no existe");
-            return ViewRouteHelper.REDIRECT_PEDIDO;
-
-        }
-        
-       
-        attribute.addFlashAttribute("warning", "Pedido eliminado con Exito!");
-
-        return ViewRouteHelper.REDIRECT_PEDIDO;
     }
 
-    @Secured({"ROLE_ADMIN_GENERAL","ROLE_ASISTENTE"})
-    @GetMapping("/deleteCurso/{id}")
-    public String eliminarCurso(@PathVariable("id") Long idPedido, RedirectAttributes attribute){
-        Curso curso1 = null;
-        if (idPedido > 0) {
-            curso1 = pedidoService.buscarPorIDCurso(idPedido);
-            if (curso1 == null) {
-                System.out.println("hola");
-                attribute.addFlashAttribute("error", "*ERROR* el pedido solicitado no existe");
-                return ViewRouteHelper.REDIRECT_PEDIDO;
-            }else{
-                pedidoService.eliminarCurso(idPedido);
-            }
-        }else{
-            attribute.addFlashAttribute("error", "*ERROR* el pedido solicitado no existe");
-            return ViewRouteHelper.REDIRECT_PEDIDO;
+    @DeleteMapping("/final/{id}")
+    public ResponseEntity<Void> deletePedidoFinal(@PathVariable long id){
+        pedidoService.deleteFinal(id);
+        return ResponseEntity.ok().build();
 
-        }
-       
-        attribute.addFlashAttribute("warning", "Pedido eliminado con Exito!");
-
-        return ViewRouteHelper.REDIRECT_PEDIDO;
-    }*/
+    }
 }
 

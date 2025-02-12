@@ -28,6 +28,8 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(authRequest
                         -> authRequest.requestMatchers(HttpMethod.POST, "/auth/**","/pedido/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/pedido/**").permitAll()
+                        .requestMatchers(HttpMethod.DELETE, "/pedido/**").permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement(sessionManager -> sessionManager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authProvider)

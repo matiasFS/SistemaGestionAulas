@@ -1,6 +1,7 @@
 package com.sistema.GestionAulas.PedidoParaFinalOCurso.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -16,6 +17,8 @@ import com.sistema.GestionAulas.PedidoParaFinalOCurso.Repository.FinalRepository
 import com.sistema.GestionAulas.PedidoParaFinalOCurso.Repository.NotaPedidoRepository;
 import com.sistema.GestionAulas.Universidad.Entity.Materia;
 import com.sistema.GestionAulas.Universidad.Repository.MateriaRepository;
+
+import jakarta.persistence.EntityNotFoundException;
 
 @Qualifier("notaPedidoService")
 @Service
@@ -69,13 +72,25 @@ public class NotaPedidoService implements INotaPedidoService {
 
     @Override
     public void deleteCurso(long id) {
-        cursoRepository.deleteById(id);
+        Optional<Curso> curso = cursoRepository.findById(id);
+        if (curso.isPresent()) {
+            cursoRepository.deleteById(curso.get().getId());
+        } else {
+            throw new EntityNotFoundException("Pedido no encontrado con ID: " + id);
+        }
+        
 
     }
 
     @Override
     public void deleteFinal(long id) {
-        finalRepository.deleteById(id);
+        Optional<Final> final1 = finalRepository.findById(id);
+        if (final1.isPresent()) {
+            finalRepository.deleteById(final1.get().getId());
+        } else {
+            throw new EntityNotFoundException("Pedido no encontrado con ID: " + id);
+        }
+        
 
     }
    
