@@ -30,7 +30,7 @@ public class MateriaService implements IMateriaService {
 
     @Override
     public Materia findByID(long id) {
-        return materiaRepository.findById(id).orElse(null);
+        return materiaRepository.findById(id);
     }
 
     @Override

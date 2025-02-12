@@ -6,12 +6,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import com.sistema.GestionAulas.PedidoParaFinalOCurso.Controller.PedidoCursoRequest;
+import com.sistema.GestionAulas.PedidoParaFinalOCurso.Controller.PedidoFinalRequest;
 import com.sistema.GestionAulas.PedidoParaFinalOCurso.Entity.Curso;
 import com.sistema.GestionAulas.PedidoParaFinalOCurso.Entity.Final;
 import com.sistema.GestionAulas.PedidoParaFinalOCurso.Entity.NotaPedido;
 import com.sistema.GestionAulas.PedidoParaFinalOCurso.Repository.CursoRepository;
 import com.sistema.GestionAulas.PedidoParaFinalOCurso.Repository.FinalRepository;
 import com.sistema.GestionAulas.PedidoParaFinalOCurso.Repository.NotaPedidoRepository;
+import com.sistema.GestionAulas.Universidad.Entity.Materia;
+import com.sistema.GestionAulas.Universidad.Repository.MateriaRepository;
 
 @Qualifier("notaPedidoService")
 @Service
@@ -26,18 +30,21 @@ public class NotaPedidoService implements INotaPedidoService {
     @Autowired
     private CursoRepository cursoRepository;
 
+    @Autowired 
+    private MateriaRepository materiaRepository;
+
     @Override
-    public List<NotaPedido> listPedidos() {
+    public List<NotaPedido> getAllPedidos() {
         return (List<NotaPedido>) notaRepository.findAll();
     }
 
     @Override
-    public void save(NotaPedido notaPedido) {
-        notaRepository.save(notaPedido);
+    public NotaPedido save(NotaPedido notaPedido) {
+        return notaRepository.save(notaPedido);
     }
 
     @Override
-    public List<Final> getAll() {
+    public List<Final> getAllFinals() {
         return finalRepository.findAll();
     }
 
@@ -47,14 +54,17 @@ public class NotaPedidoService implements INotaPedidoService {
     }
 
     @Override
-    public Final insertOrUpdate(Final final1) {
-        return finalRepository.save(final1);
+    public Final saveFinal(PedidoFinalRequest pedidoFinalRequest) {
+        Materia materia = materiaRepository.findById(pedidoFinalRequest.getMateria().getId());
+        Final savePedidoFinal = new Final(pedidoFinalRequest.getFecha(), pedidoFinalRequest.getTurno(), pedidoFinalRequest.getAula(), pedidoFinalRequest.getCantEstudiantes(), materia, pedidoFinalRequest.getObservaciones(), pedidoFinalRequest.getFechaExamen());
+        return finalRepository.save(savePedidoFinal);
     }
 
     @Override
-    public Curso insertOrUpdateCurso(Curso curso) {
-
-        return cursoRepository.save(curso);
+    public Curso saveCurso(PedidoCursoRequest pedidoCursoRequest) {
+        Materia materia = materiaRepository.findById(pedidoCursoRequest.getMateria().getId());
+        Curso savePedidoCurso = new Curso(pedidoCursoRequest.getFecha(), pedidoCursoRequest.getTurno(), pedidoCursoRequest.getAula(), pedidoCursoRequest.getCantEstudiantes(), materia, pedidoCursoRequest.getObservaciones(), pedidoCursoRequest.getCarrera(), pedidoCursoRequest.isProyector());
+        return cursoRepository.save(savePedidoCurso);
     }
 
     @Override
@@ -68,28 +78,7 @@ public class NotaPedidoService implements INotaPedidoService {
         finalRepository.deleteById(id);
 
     }
-    @Override
-    public Final findFinalByID(long id) {
-        List<Final> final1 = finalRepository.findAll();
-        Final final2 = null;
-        for (Final final3 : final1) {
-            if (final3.getId() == id) {
-                final2 = final3;
-            }
-        }
-        return final2;
-    }
-
-    @Override
-    public Curso findCursoByID(long id) {
-        List<Curso> curso = cursoRepository.findAll();
-        Curso curso1 = new Curso();
-        for (Curso curso2 : curso) {
-            if (curso2.getId() == id) {
-                curso1 = curso2;
-            }
-        }
-        return curso1;
-    }
+   
+    
 
 }

@@ -15,5 +15,6 @@ public interface MateriaRepository extends CrudRepository<Materia, Long> {
     @Override
     List<Materia> findAll();
 
+    Materia findById(long id);
 }
 

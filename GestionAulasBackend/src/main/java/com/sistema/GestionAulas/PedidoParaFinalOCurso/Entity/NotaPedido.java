@@ -19,9 +19,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 @Entity
@@ -29,7 +28,6 @@ import lombok.Setter;
 @Inheritance(strategy = InheritanceType.JOINED)
 @Getter
 @Setter
-@RequiredArgsConstructor
 public class NotaPedido implements Serializable {
 
 	/**
@@ -41,20 +39,17 @@ public class NotaPedido implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
-	@NotEmpty
 	@Column(name = "fecha", nullable = false)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate fecha;
 
-	@NotEmpty
-	@Column(name = "turno", nullable = false, length = 3)
+	@Column(name = "turno", nullable = false, length = 1)
 	private char turno;
 
-	@NotEmpty
+	@NotBlank
 	@Column(name = "aula", nullable = false, length = 60)
 	private String aula;
 
-	@NotEmpty
 	@Column(name = "cantEstudiantes", nullable = false)
 	private int cantEstudiantes;
 
@@ -68,4 +63,13 @@ public class NotaPedido implements Serializable {
 	@OneToOne
 	@JoinColumn(name = "espacio_id")
 	private Espacio espacio;
+
+	public NotaPedido(LocalDate fecha, char turno, String aula, int cantEstudiantes, Materia materia, String observaciones){
+		this.fecha = fecha;
+		this.turno = turno;
+		this.aula = aula;
+		this.cantEstudiantes = cantEstudiantes;
+		this.materia = materia;
+		this.observaciones = observaciones;
+	}
 }
