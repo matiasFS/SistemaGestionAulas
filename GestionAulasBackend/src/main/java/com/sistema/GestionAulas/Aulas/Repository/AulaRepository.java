@@ -14,4 +14,5 @@ public interface AulaRepository extends CrudRepository<Aula, Long> {
     @Override
     List<Aula> findAll();
 
+    List<Aula> findByEdificioId(long id);
 }

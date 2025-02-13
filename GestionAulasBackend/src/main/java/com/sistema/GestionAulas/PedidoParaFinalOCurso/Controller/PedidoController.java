@@ -24,7 +24,7 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:5173")
-@RequestMapping("/pedido")
+@RequestMapping("/api")
 @RequiredArgsConstructor
 public class PedidoController {
 
@@ -36,18 +36,18 @@ public class PedidoController {
     @Qualifier("materiaService")
     public MateriaService materiaService;
 
-    @PostMapping("/final")
+    @PostMapping("/pedidoparafinal")
     public ResponseEntity<Final> createPedidoFinal(@RequestBody PedidoFinalRequest pedidoFinalRequest) {
         return ResponseEntity.ok(pedidoService.saveFinal(pedidoFinalRequest));
     }
 
     
-    @PostMapping("/curso")
+    @PostMapping("/pedidoparacurso")
     public ResponseEntity<Curso> createPedidoCurso(@RequestBody PedidoCursoRequest pedidoCursoRequest) {
         return ResponseEntity.ok(pedidoService.saveCurso(pedidoCursoRequest));
     }
 
-    @GetMapping("/listPedidosFinal")
+    @GetMapping("/listpedidosfinal")
     public ResponseEntity<List<Final>> listPedidosFinal() {
         return ResponseEntity.ok(pedidoService.getAllFinals());
 
@@ -58,14 +58,14 @@ public class PedidoController {
         return ResponseEntity.ok(pedidoService.getAllCursos());
     }
     
-    @DeleteMapping("/curso/{id}")
+    @DeleteMapping("/pedidoparacurso/{id}")
     public ResponseEntity<Void> deletePedidoCurso(@PathVariable long id){
         pedidoService.deleteCurso(id);
         return ResponseEntity.ok().build();
 
     }
 
-    @DeleteMapping("/final/{id}")
+    @DeleteMapping("/pedidoparafinal/{id}")
     public ResponseEntity<Void> deletePedidoFinal(@PathVariable long id){
         pedidoService.deleteFinal(id);
         return ResponseEntity.ok().build();

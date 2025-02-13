@@ -27,9 +27,9 @@ public class SecurityConfig {
         return http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(authRequest
-                        -> authRequest.requestMatchers(HttpMethod.POST, "/auth/**","/pedido/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/pedido/**").permitAll()
-                        .requestMatchers(HttpMethod.DELETE, "/pedido/**").permitAll()
+                        -> authRequest.requestMatchers(HttpMethod.POST, "/auth/**","/api/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/**").permitAll()
+                        .requestMatchers(HttpMethod.DELETE, "/api/**").permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement(sessionManager -> sessionManager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authProvider)

@@ -6,7 +6,8 @@ import com.sistema.GestionAulas.Aulas.Entity.Edificio;
 
 public interface IEdificioService {
 
-    public List<Edificio> findAll();;
+    
+    public List<Edificio> findAll();
 
     public Edificio findByID(long id);
 

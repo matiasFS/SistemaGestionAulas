@@ -1,5 +1,6 @@
 package com.sistema.GestionAulas.Aulas.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,5 +61,10 @@ public class AulaService implements IAulaService {
             }
         }
         return laboratorio1;
+    }
+
+    @Override
+    public List<Aula> findByEdificioId(long id){
+        return aulaRepository.findByEdificioId(id);
     }
 }

@@ -16,4 +16,6 @@ public interface IAulaService {
 
     public Laboratorio findLabByID(long id);
 
+    
+    public List<Aula> findByEdificioId(long id);
 }

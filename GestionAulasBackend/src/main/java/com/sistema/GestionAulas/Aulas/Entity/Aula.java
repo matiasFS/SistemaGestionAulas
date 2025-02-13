@@ -2,6 +2,9 @@ package com.sistema.GestionAulas.Aulas.Entity;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -23,6 +26,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @RequiredArgsConstructor
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "tipo")
 public class Aula implements Serializable {
 
 	/**
@@ -40,6 +44,7 @@ public class Aula implements Serializable {
 
 	@ManyToOne
 	@JoinColumn(name = "edificio_id")
+	@JsonBackReference
 	private Edificio edificio;
 
 }

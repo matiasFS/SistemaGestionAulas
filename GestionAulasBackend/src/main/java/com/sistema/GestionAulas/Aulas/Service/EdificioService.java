@@ -20,7 +20,7 @@ public class EdificioService implements IEdificioService {
     @Override
     public List<Edificio> findAll() {
 
-        return edificioRepository.findAll();
+        return (List<Edificio>) edificioRepository.findAll();
     }
 
     @Override
