@@ -18,7 +18,7 @@ public interface IEspacioService {
 
     public void delete(long id);
 
-    public Espacio traerEspacio(LocalDate fecha, char turno, Aula aula);
+    public Espacio traerEspacio(long idAula, LocalDate fecha, char turno);
 
     public void agregarEspacioMes(int mes, int anio, char turno, Aula aula);
 

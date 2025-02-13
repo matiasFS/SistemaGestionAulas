@@ -93,6 +93,16 @@ public class NotaPedidoService implements INotaPedidoService {
         
 
     }
+
+    @Override
+    public Optional<Final> findFinalByID(long id) {
+        return finalRepository.findById(id);
+    }
+
+    @Override
+    public Optional<Curso> findCursoByID(long id) {
+        return cursoRepository.findById(id);
+    }
    
     
 

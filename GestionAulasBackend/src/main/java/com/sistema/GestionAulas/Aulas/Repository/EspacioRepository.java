@@ -1,5 +1,6 @@
 package com.sistema.GestionAulas.Aulas.Repository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
@@ -15,4 +16,6 @@ public interface EspacioRepository extends CrudRepository<Espacio, Long> {
     List<Espacio> findAll();
 
     List<Espacio> findByLibreTrue();
+
+    Espacio findByAulaIdAndFechaAndTurno(long id, LocalDate fecha, char turno);
 }

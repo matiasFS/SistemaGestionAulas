@@ -1,6 +1,7 @@
 package com.sistema.GestionAulas.PedidoParaFinalOCurso.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.sistema.GestionAulas.PedidoParaFinalOCurso.Controller.PedidoCursoRequest;
 import com.sistema.GestionAulas.PedidoParaFinalOCurso.Controller.PedidoFinalRequest;
@@ -27,5 +28,8 @@ public interface INotaPedidoService {
 
     public void deleteCurso(long id);
 
+    public Optional<Final> findFinalByID(long id);
+
+    public Optional<Curso> findCursoByID(long id);
 }
 

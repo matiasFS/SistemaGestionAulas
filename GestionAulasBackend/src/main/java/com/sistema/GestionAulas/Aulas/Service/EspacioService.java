@@ -46,16 +46,8 @@ public class EspacioService implements IEspacioService {
 	}
 
 	@Override
-	public Espacio traerEspacio(LocalDate fecha, char turno, Aula aula) {
-		List<Espacio> espacio = this.findAll();
-		Espacio espacio1 = null;
-		for (Espacio espacio2 : espacio) {
-			if (espacio2.getFecha().equals(fecha) && espacio2.getTurno() == turno
-					&& espacio2.getAula().getId() == aula.getId()) {
-				espacio1 = espacio2;
-			}
-		}
-		return espacio1;
+	public Espacio traerEspacio(long idAula, LocalDate fecha, char turno) {
+		return espacioRepository.findByAulaIdAndFechaAndTurno(idAula, fecha, turno);
 	}
 
     @Override
@@ -71,7 +63,7 @@ public class EspacioService implements IEspacioService {
 		for (int i = 0; i < largoMes; i++) {
 			if (fechaN.getDayOfMonth() == 1 && i == 0) {
 
-				if (traerEspacio(fechaN, turno, aula) == null) {
+				if (traerEspacio(aula.getId(), fechaN, turno) == null) {
 					Espacio espacio = new Espacio(fechaN, turno, true, aula);
 					save(espacio);
 				}
@@ -79,7 +71,7 @@ public class EspacioService implements IEspacioService {
 			} else {
 				fechaN = fechaN.plusDays(1);
 
-				if (traerEspacio(fechaN, turno, aula) == null) {
+				if (traerEspacio(aula.getId(), fechaN, turno) == null) {
 
 					Espacio espacio = new Espacio(fechaN, turno, true, aula);
 					save(espacio);
