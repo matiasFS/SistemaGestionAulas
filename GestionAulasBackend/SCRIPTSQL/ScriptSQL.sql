@@ -2,11 +2,11 @@ create database if not exists gestionaulas;
 
 insert into `persona` values (1,'Sainz',55555555,'Carlos','DNI');
 insert into `persona` values(2,'Hamilton',44444444,'Lewis','DNI');
-insert into `persona` values(2,'Verstappen',33333333,'Max','DNI');
+insert into `persona` values(3,'Verstappen',33333333,'Max','DNI');
 
 insert into `user` values('carlos@gmail.com', '$2a$10$lpeTNBUGJfHxsJNOkAF5IuS5eLZUOuL8vlHMd/9O0rL5Cb3rp.uk6','ADMIN','admin',1);
 insert into `user` values('lewis@gmail.com', '$10$biCKEkkZ.J2MZwa3DeVfx.e6w/UKqWFbCV4tiyxvKuvVDkPuQkIvi','ADMINGENERAL','admingeneral',2);
-insert into `user` values('max@gmail.com', '$2a$10$XrlKrxecoR6rr4aCwpVnJe.GKtXttVxSlrKv8VdtEjNx5hL7eNomy','ASSISTANT','assistant',2);
+insert into `user` values('max@gmail.com', '$2a$10$XrlKrxecoR6rr4aCwpVnJe.GKtXttVxSlrKv8VdtEjNx5hL7eNomy','ASSISTANT','assistant',3);
 
 INSERT INTO `edificio` VALUES (1,'José Hernandez'),(2,'Scalabrini'),(3,'Ugarte'),(4,'Marechal'),(5,'Manzi'),(6,'Jaureche');
 INSERT INTO `aula` VALUES (1,7,1),(2,6,1),(3,19,1),(4,21,1),(5,11,1),(6,1,2),(7,2,2),(8,7,3),(9,10,4),(10,19,2);
