@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,28 +37,32 @@ public class PedidoController {
     @Qualifier("materiaService")
     public MateriaService materiaService;
 
+    @PreAuthorize("hasAuthority('ASSISTANT')")
     @PostMapping("/pedidoparafinal")
     public ResponseEntity<Final> createPedidoFinal(@RequestBody PedidoFinalRequest pedidoFinalRequest) {
         return ResponseEntity.ok(pedidoService.saveFinal(pedidoFinalRequest));
     }
 
-    
+    @PreAuthorize("hasAuthority('ASSISTANT')")
     @PostMapping("/pedidoparacurso")
     public ResponseEntity<Curso> createPedidoCurso(@RequestBody PedidoCursoRequest pedidoCursoRequest) {
         return ResponseEntity.ok(pedidoService.saveCurso(pedidoCursoRequest));
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMINGENERAL', 'ASSISTANT') ")
     @GetMapping("/listpedidosfinal")
     public ResponseEntity<List<Final>> listPedidosFinal() {
         return ResponseEntity.ok(pedidoService.getAllFinals());
 
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMINGENERAL', 'ASSISTANT') ")
     @GetMapping("/listPedidosCurso")
     public ResponseEntity<List<Curso>> listPedidoCurso(){
         return ResponseEntity.ok(pedidoService.getAllCursos());
     }
     
+    @PreAuthorize("hasAuthority('ADMINGENERAL') ")
     @DeleteMapping("/pedidoparacurso/{id}")
     public ResponseEntity<Void> deletePedidoCurso(@PathVariable long id){
         pedidoService.deleteCurso(id);
@@ -65,6 +70,7 @@ public class PedidoController {
 
     }
 
+    @PreAuthorize("hasAuthority('ADMINGENERAL') ")
     @DeleteMapping("/pedidoparafinal/{id}")
     public ResponseEntity<Void> deletePedidoFinal(@PathVariable long id){
         pedidoService.deleteFinal(id);

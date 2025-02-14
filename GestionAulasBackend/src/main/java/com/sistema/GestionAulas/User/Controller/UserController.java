@@ -36,26 +36,26 @@ public class UserController {
 
     private final JwtService jwtService;
 
-    @PreAuthorize("hasAnyAuthority('ADMIN', 'ASSISTANT') ")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'ADMINGENERAL', 'ASSISTANT') ")
     @GetMapping("/users")
     public ResponseEntity<List<User>> getUsers() {
         return ResponseEntity.ok(userService.findAll());
     }
 
     @CrossOrigin
-    @PreAuthorize("hasAnyAuthority('ADMIN', 'ASSISTANT')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'ADMINGENERAL', 'ASSISTANT') ")
     @PostMapping("/users")
     public User addUser(@Valid @RequestBody User user) {
         return userService.save(user);
     }
 
-    @PreAuthorize("hasAnyAuthority('ADMIN', 'ASSISTANT')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'ADMINGENERAL', 'ASSISTANT') ")
     @GetMapping("/users/{id}")
     public ResponseEntity<User> getUserById(@PathVariable int id) {
         return ResponseEntity.ok(userService.findById(id));
     }
 
-    @PreAuthorize("hasAnyAuthority('ADMIN', 'PROFESSOR', 'ASSISTANT', 'USER')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'ADMINGENERAL', 'ASSISTANT') ")
     @PutMapping("/users/updateUser")
     public ResponseEntity<User> updateUser(@RequestHeader("Authorization") String token, @Valid @RequestBody UpdateUserRequest userUpdateRequest) {
         String username = jwtService.getUsernameFromToken(token.substring(7));
@@ -63,7 +63,7 @@ public class UserController {
         return ResponseEntity.ok(userToUpdate);
     }
 
-    @PreAuthorize("hasAnyAuthority('ADMIN', 'PROFESSOR', 'ASSISTANT', 'USER')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'ADMINGENERAL', 'ASSISTANT') ")
     @PutMapping("/users/changePassword")
     public ResponseEntity<User> changePassword(@RequestHeader("Authorization") String token, @Valid @RequestBody PasswordChangeRequest passwordChangeRequest) {
         String username = jwtService.getUsernameFromToken(token.substring(7));

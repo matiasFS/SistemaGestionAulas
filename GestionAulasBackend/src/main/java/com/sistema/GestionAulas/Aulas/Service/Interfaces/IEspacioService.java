@@ -2,6 +2,7 @@ package com.sistema.GestionAulas.Aulas.Service.Interfaces;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 import com.sistema.GestionAulas.Aulas.Entity.Aula;
 import com.sistema.GestionAulas.Aulas.Entity.Espacio;
@@ -22,4 +23,5 @@ public interface IEspacioService {
 
     public void agregarEspacioMes(int mes, int anio, char turno, Aula aula);
 
+    public Optional<Espacio> asignarEspacio(long idEspacio, long idNotaPedido);
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,54 +31,17 @@ public class EdificioController {
     @Autowired
 	private AulaService aulaService;
 
+	@PreAuthorize("hasAnyAuthority('ADMINGENERAL', 'ASSISTANT') ")
 	@GetMapping("/edificios")
 	public ResponseEntity<List<Edificio>> listarEdificios() {
 		return ResponseEntity.ok(edificioService.findAll());
 
 	}
 
-
+    @PreAuthorize("hasAnyAuthority('ADMINGENERAL', 'ASSISTANT') ")
 	@GetMapping("/aulasdeledificio/{id}")
 	public ResponseEntity<List<Aula>> listAulasDelEdificio(@PathVariable long id) {
 
 		return ResponseEntity.ok(aulaService.findByEdificioId(id));
 	}
-	
-/*@GetMapping("/{id}")
-	public ModelAndView listarEdificiosYaulas(@PathVariable("id") Long idEdificio, Model model,
-			RedirectAttributes attributes) {
-
-		ModelAndView mAV = new ModelAndView(ViewRouteHelper.EDIFICIOYAULAS);
-
-		Edificio edificio = null;
-		if (idEdificio > 0) {
-			edificio = edificioService.buscarPorID(idEdificio);
-		}
-		if (edificio == null) {
-			attributes.addFlashAttribute("error", "*ERROR* el Edificio solicitado no existe");
-			mAV.setViewName(ViewRouteHelper.LISTADOEDIFICIO);
-		}
-
-		List<Tradicional> tradicional = new ArrayList<>();
-		List<Laboratorio> laboratorio = new ArrayList<>();
-
-		for (Aula aula : edificio.getAulas()) {
-			if (aula instanceof Tradicional) {
-				tradicional.add((Tradicional) aula);
-			}
-
-			else {
-				laboratorio.add((Laboratorio) aula);
-			}
-
-		}
-
-		mAV.addObject("tradicional", tradicional);
-		mAV.addObject("laboratorio", laboratorio);
-
-		return mAV;
-
-	} */
-	
-
 }

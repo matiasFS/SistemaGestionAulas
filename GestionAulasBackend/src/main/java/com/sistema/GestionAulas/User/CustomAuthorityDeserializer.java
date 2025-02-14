@@ -14,6 +14,7 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+@SuppressWarnings("rawtypes")
 public class CustomAuthorityDeserializer extends JsonDeserializer {
 
     @Override
