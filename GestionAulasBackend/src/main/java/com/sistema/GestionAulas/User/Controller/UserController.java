@@ -43,7 +43,7 @@ public class UserController {
     }
 
     @CrossOrigin
-    @PreAuthorize("hasAnyAuthority('ADMIN', 'ADMINGENERAL', 'ASSISTANT') ")
+    @PreAuthorize("hasAnyAuthority('ADMIN') ")
     @PostMapping("/users")
     public User addUser(@Valid @RequestBody User user) {
         return userService.save(user);
