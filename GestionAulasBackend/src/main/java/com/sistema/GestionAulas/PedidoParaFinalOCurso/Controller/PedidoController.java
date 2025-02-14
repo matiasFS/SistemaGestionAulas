@@ -57,7 +57,7 @@ public class PedidoController {
     }
 
     @PreAuthorize("hasAnyAuthority('ADMINGENERAL', 'ASSISTANT') ")
-    @GetMapping("/listPedidosCurso")
+    @GetMapping("/listpedidoscurso")
     public ResponseEntity<List<Curso>> listPedidoCurso(){
         return ResponseEntity.ok(pedidoService.getAllCursos());
     }

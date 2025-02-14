@@ -31,6 +31,7 @@ public class EspacioController {
     @Autowired
     private EspacioService espacioService;
 
+    @PreAuthorize("hasAnyAuthority('ADMINGENERAL', 'ASSISTANT') ")
     @GetMapping("/espacios")
     public ResponseEntity<List<Espacio>> listEspacios(){
         return ResponseEntity.ok(espacioService.findAll());
