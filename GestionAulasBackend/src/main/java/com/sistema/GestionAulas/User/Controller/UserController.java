@@ -36,7 +36,7 @@ public class UserController {
 
     private final JwtService jwtService;
 
-    @PreAuthorize("hasAnyAuthority('ADMIN', 'ADMINGENERAL', 'ASSISTANT') ")
+    @PreAuthorize("hasAnyAuthority('ADMIN') ")
     @GetMapping("/users")
     public ResponseEntity<List<User>> getUsers() {
         return ResponseEntity.ok(userService.findAll());
