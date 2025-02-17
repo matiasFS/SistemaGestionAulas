@@ -110,7 +110,7 @@ Asegurarse de tener Java 8+ y MySQL instalados.
 
 
 <!-- FUNCIONES -->
-## Funciones de la plataforma con postman
+## Funciones de la plataforma
 
    Las principales funciones de la plataforma son:
 
@@ -169,6 +169,6 @@ Asegurarse de tener Java 8+ y MySQL instalados.
 <!-- CONTACT -->
 ## Contacto
 
-Matias Silvestri - [Linkedin](https://www.linkedin.com/in/matias-franco-silvestri-1a037721b/) - matias.f.silvestri1@gmail.com
+Matias Silvestri - [Linkedin](www.linkedin.com/in/matiasfrancosilvestri) - matias.f.silvestri1@gmail.com
 
 <p align="right">(<a href="#readme-top">Volver arriba</a>)</p>
