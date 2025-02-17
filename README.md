@@ -169,6 +169,6 @@ Asegurarse de tener Java 8+ y MySQL instalados.
 <!-- CONTACT -->
 ## Contacto
 
-Matias Silvestri - [Linkedin](www.linkedin.com/in/matiasfrancosilvestri) - matias.f.silvestri1@gmail.com
+Matias Silvestri - [Linkedin](https://www.linkedin.com/in/matiasfrancosilvestri/) - matias.f.silvestri1@gmail.com
 
 <p align="right">(<a href="#readme-top">Volver arriba</a>)</p>
